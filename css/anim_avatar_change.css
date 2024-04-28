@@ -1,0 +1,17 @@
+/* 图片切换时的旋转和过渡效果 */
+.avatar-img img {
+    transition: transform 0.5s ease-in-out;
+  }
+  
+  .rotate {
+    animation: spin 0.5s linear 1;
+  }
+  
+  @keyframes spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }

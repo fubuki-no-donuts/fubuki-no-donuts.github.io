@@ -1,0 +1,78 @@
+/* 页脚与头图透明 */
+#footer {
+  background: transparent !important;
+}
+#page-header {
+  background: transparent !important;
+}
+
+/* 白天模式遮罩透明 */
+#footer::before {
+  background: transparent !important;
+}
+#page-header::before {
+  background: transparent !important;
+}
+
+/* 夜间模式遮罩透明 */
+[data-theme="dark"] #footer::before {
+  background: transparent !important;
+}
+[data-theme="dark"] #page-header::before {
+  background: transparent !important;
+}
+
+/* 顶栏常驻 */
+.nav-fixed #nav{
+  transform: translateY(58px)!important;
+  -webkit-transform: translateY(58px)!important;
+  -moz-transform: translateY(58px)!important;
+  -ms-transform: translateY(58px)!important;
+  -o-transform: translateY(58px)!important;
+}
+#nav{
+  transition: none!important;
+  -webkit-transition: none!important;
+  -moz-transition: none!important;
+  -ms-transition: none!important;
+  -o-transition: none!important;
+}
+
+/* 主菜单栏居中 */
+#nav .menus_items{
+  position: absolute !important;
+  width: fit-content !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+}
+
+#nav {
+  position: relative;
+}
+
+.menus_items,
+#blog-info{
+  font-size: 28px;
+  font-weight: Bold;
+}
+
+.menus_items {
+  position: relative;
+  top: 0px; /* 向上移动 10px，根据需要调整 */
+}
+
+
+#page-header #post-info {
+  position: absolute;
+  bottom: 100px;
+  padding: 0 8%;
+  width: 100%;
+  text-align: center;
+}
+
+div#post-info h1.post-title,
+div#post-meta {
+  /* font-size: 36; */
+  font-weight: bold;
+}
+

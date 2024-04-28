@@ -1,0 +1,33 @@
+:root {
+    --shun: rgb(132,109,95, 1.0);
+    --normal-light: rgba(255, 255, 255, 0.75);
+    --arona-light: rgba(200, 225, 255, 0.88);
+    --purana-dark: rgba(222, 175, 243, 0.88);
+    --border-light-style: 5px solid rgb(53, 155, 255, 0.8); /* 实线边框，颜色与背景色相同 */
+    --border-dark-style: 5px solid rgba(215, 53, 255, 0.8); /* 实线边框，颜色与背景色相同 */
+    --backdrop-filter: blur(5px) saturate(150%);
+  }
+  
+
+  /* 首页侧栏卡片 */
+  #aside-content .card-widget {
+    background: rgb(200, 225, 255, 0.7);
+    backdrop-filter: var(--backdrop-filter);
+    border-radius: 18px;
+  }
+  /* 文章页、归档页、普通页面 */
+div#post,
+div#page,
+div#archive,
+#recent-posts > .recent-post-item {
+  background: rgb(200, 225, 255, 0.5);
+  backdrop-filter: var(--backdrop-filter);
+  border-radius: 20px;
+}
+
+/* 导航栏 */
+#page-header.nav-fixed #nav {
+  background: var(--arona-light);
+  backdrop-filter: var(--backdrop-filter);
+}
+

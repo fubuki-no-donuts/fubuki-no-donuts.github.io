@@ -1,0 +1,36 @@
+:root {
+    --shun: rgb(132,109,95, 1.0);
+    --normal-light: rgba(255, 255, 255, 0.75);
+    --normal-dark: rgba(25, 25, 25, 0.75);
+    --arona-light: rgba(200, 225, 255, 0.88);
+    --purana-dark: rgba(222, 175, 243, 0.88);
+    --border-light-style: 5px solid rgb(53, 155, 255, 0.8); /* 实线边框，颜色与背景色相同 */
+    --border-dark-style: 5px solid rgba(215, 53, 255, 0.8); /* 实线边框，颜色与背景色相同 */
+    --backdrop-filter: blur(5px) saturate(150%);
+  }
+  
+
+/* 导航栏 */
+  [data-theme="dark"] #page-header.nav-fixed #nav {
+    background: var(--purana-dark) !important;
+  }
+  
+  /* 夜间模式遮罩 */
+  /* [data-theme="dark"] #recent-posts > .recent-post-item, */
+  [data-theme="dark"] #aside-content .card-widget{
+    background: rgb(222, 175, 243, 0.5);
+  }
+  [data-theme="dark"] div#post,
+  [data-theme="dark"] div#archive,
+  [data-theme="dark"] div#page,
+  [data-theme="dark"] #recent-posts > .recent-post-item {
+    background: rgb(222, 175, 243, 0.3);
+  } 
+
+  /* 夜间模式页脚页头遮罩透明 */
+  [data-theme="dark"] #footer::before {
+    background: transparent !important;
+  }
+  [data-theme="dark"] #page-header::before {
+    background: transparent !important;
+  }

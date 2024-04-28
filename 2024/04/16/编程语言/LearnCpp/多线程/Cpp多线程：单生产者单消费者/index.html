@@ -1,0 +1,214 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Cpp 多线程：单生产者单消费者 | Fubuki の Donuts</title><meta name="author" content="Shin"><meta name="copyright" content="Shin"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="简单的生产者消费者模型假设存在 A、B 两个线程，二者共享一块内存缓冲区，A 线程负责生产内容写入缓冲区，B 线程负责从缓冲区取出并消耗内容，其中 A 线程就是生产者，B 线程就是消费者   生产者消费者模型出现的原因当生产线程的生产速度与消费线程的消费速度不匹配时  生产速度 &gt; 消费速度 生产线程必须等待消费线程，防止出现内存存储空间不足   生产速度 &lt; 消费速度 消费线程必须等">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Cpp 多线程：单生产者单消费者">
+<meta property="og:url" content="https://fubuki-no-donuts.github.io/2024/04/16/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/LearnCpp/%E5%A4%9A%E7%BA%BF%E7%A8%8B/Cpp%E5%A4%9A%E7%BA%BF%E7%A8%8B%EF%BC%9A%E5%8D%95%E7%94%9F%E4%BA%A7%E8%80%85%E5%8D%95%E6%B6%88%E8%B4%B9%E8%80%85/index.html">
+<meta property="og:site_name" content="Fubuki の Donuts">
+<meta property="og:description" content="简单的生产者消费者模型假设存在 A、B 两个线程，二者共享一块内存缓冲区，A 线程负责生产内容写入缓冲区，B 线程负责从缓冲区取出并消耗内容，其中 A 线程就是生产者，B 线程就是消费者   生产者消费者模型出现的原因当生产线程的生产速度与消费线程的消费速度不匹配时  生产速度 &gt; 消费速度 生产线程必须等待消费线程，防止出现内存存储空间不足   生产速度 &lt; 消费速度 消费线程必须等">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://s2.loli.net/2024/04/28/9U4mZP6gwWiptXj.jpg">
+<meta property="article:published_time" content="2024-04-16T11:53:03.000Z">
+<meta property="article:modified_time" content="2024-04-28T02:49:34.640Z">
+<meta property="article:author" content="Shin">
+<meta property="article:tag" content="C++">
+<meta property="article:tag" content="C++ 多线程">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s2.loli.net/2024/04/28/9U4mZP6gwWiptXj.jpg"><link rel="shortcut icon" href="https://s2.loli.net/2024/04/28/HVGIlpTrEwXeUfQ.jpg"><link rel="canonical" href="https://fubuki-no-donuts.github.io/2024/04/16/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/LearnCpp/%E5%A4%9A%E7%BA%BF%E7%A8%8B/Cpp%E5%A4%9A%E7%BA%BF%E7%A8%8B%EF%BC%9A%E5%8D%95%E7%94%9F%E4%BA%A7%E8%80%85%E5%8D%95%E6%B6%88%E8%B4%B9%E8%80%85/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Cpp 多线程：单生产者单消费者',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-04-28 10:49:34'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/bg_onepic.css" media="defer" onload="this.media='all'"><link rel="stylesheet" href="/css/anim_web_bg.css" media="defer" onload="this.media='all'"><link rel="stylesheet" href="/css/anim_avatar_change.css" media="defer" onload="this.media='all'"><link rel="stylesheet" href="/css/nav.css" media="defer" onload="this.media='all'"><link rel="stylesheet" href="/css/cat.css"><link rel="stylesheet" href="/css/arona_style.css"><link rel="stylesheet" href="/css/purana_style.css"><div id="myscoll"></div><!-- hexo injector head_end start --><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-wowjs/lib/animate.min.css" media="print" onload="this.media='screen'"><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.2.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://s2.loli.net/2024/04/28/9U4mZP6gwWiptXj.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">45</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">24</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">6</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 文档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="Fubuki の Donuts"><span class="site-name">Fubuki の Donuts</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 文档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Cpp 多线程：单生产者单消费者</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-04-16T11:53:03.000Z" title="发表于 2024-04-16 19:53:03">2024-04-16</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-04-28T02:49:34.640Z" title="更新于 2024-04-28 10:49:34">2024-04-28</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/">编程语言</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Cpp 多线程：单生产者单消费者"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="简单的生产者消费者模型"><a href="#简单的生产者消费者模型" class="headerlink" title="简单的生产者消费者模型"></a>简单的生产者消费者模型</h1><p>假设存在 A、B 两个线程，二者共享一块内存缓冲区，A 线程负责生产内容<strong>写入缓冲区</strong>，B 线程负责<strong>从缓冲区取出</strong>并消耗内容，其中 A 线程就是生产者，B 线程就是消费者</p>
+
+
+<h1 id="生产者消费者模型出现的原因"><a href="#生产者消费者模型出现的原因" class="headerlink" title="生产者消费者模型出现的原因"></a>生产者消费者模型出现的原因</h1><p>当生产线程的生产速度与消费线程的消费速度不匹配时</p>
+<ul>
+<li>生产速度 &gt; 消费速度<ul>
+<li>生产线程必须等待消费线程，防止出现内存存储空间不足</li>
+</ul>
+</li>
+<li>生产速度 &lt; 消费速度<ul>
+<li>消费线程必须等待生产线程，影响产品的使用效率</li>
+</ul>
+</li>
+</ul>
+<p>通过让线程共享一块内存缓冲区，达到两个线程之间解耦的效果。生产线程只需要考虑缓冲区非满状态时处于激活状态生产产品，消费线程只需要考虑缓冲区非空状态时处于激活状态消费产品。</p>
+<h1 id="模型特点"><a href="#模型特点" class="headerlink" title="模型特点"></a>模型特点</h1><ul>
+<li>缓冲区满时，生产者不写入，进入休眠状态，直到缓冲区不为满（接收消费者唤醒信号）</li>
+<li>缓冲区空时，消费者不读取，进入休眠状态，直到缓冲区不为空（接收生产者唤醒信号）</li>
+</ul>
+<h1 id="简单实现"><a href="#简单实现" class="headerlink" title="简单实现"></a>简单实现</h1><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 信号量</span></span><br><span class="line">std::condition_variable cv; <span class="comment">// 用来互相唤醒</span></span><br><span class="line"><span class="comment">// 配合信号量的标识位</span></span><br><span class="line"><span class="type">bool</span> production_done = <span class="literal">false</span>; <span class="comment">// 生产结束了</span></span><br><span class="line"><span class="type">bool</span> product_ready = <span class="literal">false</span>; <span class="comment">// 有产品可以消费了</span></span><br><span class="line"><span class="comment">// 互斥量</span></span><br><span class="line">std::mutex mtx; <span class="comment">// 互斥访问缓冲区（配合共享资源一对一？）</span></span><br><span class="line"><span class="comment">// 共享缓冲区</span></span><br><span class="line">std::queue&lt;<span class="type">int</span>&gt; Productions;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 生产线程</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">Producer</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>; i&lt;<span class="number">10</span>; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        std::this_thread::<span class="built_in">sleep_for</span>(std::chrono::<span class="built_in">milliseconds</span>(<span class="number">10</span>));</span><br><span class="line">        <span class="comment">// 生产线程在产品写入缓冲区前获取锁</span></span><br><span class="line">        <span class="function">std::unique_lock&lt;std::mutex&gt; <span class="title">lock</span><span class="params">(mtx)</span></span>; <span class="comment">// unique_lock 管理锁和释放时机</span></span><br><span class="line">        Productions.<span class="built_in">push</span>(i); <span class="comment">// 生产产品</span></span><br><span class="line">        std::cout &lt;&lt; <span class="string">&quot;Producing: &quot;</span> &lt;&lt; i &lt;&lt; std::endl;</span><br><span class="line">        product_ready = <span class="literal">true</span>; <span class="comment">// 产品可用</span></span><br><span class="line">        cv.<span class="built_in">notify_all</span>(); <span class="comment">// 通知消费者线程</span></span><br><span class="line">    &#125;</span><br><span class="line">    production_done = <span class="literal">true</span>; <span class="comment">// 全部生产已经结束</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 消费线程</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">Consumer</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// 先获取锁</span></span><br><span class="line">    <span class="function">std::unique_lock&lt;std::mutex&gt; <span class="title">lock</span><span class="params">(mtx)</span></span>;</span><br><span class="line">    <span class="keyword">while</span>(!production_done || !Productions.<span class="built_in">empty</span>()) <span class="comment">// 生产未结束，或者缓冲区非空都要尝试继续消费</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">while</span>(!product_ready) <span class="comment">// 防止误唤醒，要在 wait 外多设置一个循环检测</span></span><br><span class="line">        &#123;</span><br><span class="line">            cv.<span class="built_in">wait</span>(lock);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">while</span>(!Productions.<span class="built_in">empty</span>()) <span class="comment">// 缓冲区非空才可以真正消费</span></span><br><span class="line">        &#123;</span><br><span class="line">            std::cout &lt;&lt; <span class="string">&quot;Consuming: &quot;</span> &lt;&lt; Productions.<span class="built_in">front</span>() &lt;&lt; std::endl;</span><br><span class="line">            Productions.<span class="built_in">pop</span>();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        product_ready = <span class="literal">false</span>; <span class="comment">// 消费者将全部产品消费完了</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">Test_MySPSC</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="function">std::thread <span class="title">t1</span><span class="params">(Producer)</span></span>;</span><br><span class="line">    <span class="function">std::thread <span class="title">t2</span><span class="params">(Consumer)</span></span>;</span><br><span class="line">    t1.<span class="built_in">join</span>();</span><br><span class="line">    t2.<span class="built_in">join</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://fubuki-no-donuts.github.io">Shin</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://fubuki-no-donuts.github.io/2024/04/16/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/LearnCpp/%E5%A4%9A%E7%BA%BF%E7%A8%8B/Cpp%E5%A4%9A%E7%BA%BF%E7%A8%8B%EF%BC%9A%E5%8D%95%E7%94%9F%E4%BA%A7%E8%80%85%E5%8D%95%E6%B6%88%E8%B4%B9%E8%80%85/">https://fubuki-no-donuts.github.io/2024/04/16/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/LearnCpp/%E5%A4%9A%E7%BA%BF%E7%A8%8B/Cpp%E5%A4%9A%E7%BA%BF%E7%A8%8B%EF%BC%9A%E5%8D%95%E7%94%9F%E4%BA%A7%E8%80%85%E5%8D%95%E6%B6%88%E8%B4%B9%E8%80%85/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://fubuki-no-donuts.github.io" target="_blank">Fubuki の Donuts</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/C/">C++</a><a class="post-meta__tags" href="/tags/C-%E5%A4%9A%E7%BA%BF%E7%A8%8B/">C++ 多线程</a></div><div class="post_share"><div class="social-share" data-image="https://s2.loli.net/2024/04/28/9U4mZP6gwWiptXj.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2024/04/20/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/LearnCpp/%E5%85%B3%E9%94%AE%E5%AD%97/Cpp%E5%85%B3%E9%94%AE%E5%AD%97%EF%BC%9Aauto/" title="Cpp 关键字：auto"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Cpp 关键字：auto</div></div></a></div><div class="next-post pull-right"><a href="/2024/04/15/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/LearnCpp/%E5%A4%9A%E7%BA%BF%E7%A8%8B/Cpp%E5%A4%9A%E7%BA%BF%E7%A8%8B%EF%BC%9A%E6%9D%A1%E4%BB%B6%E5%8F%98%E9%87%8F/" title="Cpp 多线程：条件变量"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Cpp 多线程：条件变量</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2024/04/15/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/LearnCpp/%E5%A4%9A%E7%BA%BF%E7%A8%8B/Cpp%E5%A4%9A%E7%BA%BF%E7%A8%8B%EF%BC%9A%E4%BA%92%E6%96%A5%E9%87%8F/" title="Cpp 多线程：互斥量"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-04-15</div><div class="title">Cpp 多线程：互斥量</div></div></a></div><div><a href="/2024/04/15/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/LearnCpp/%E5%A4%9A%E7%BA%BF%E7%A8%8B/Cpp%E5%A4%9A%E7%BA%BF%E7%A8%8B%EF%BC%9A%E6%9D%A1%E4%BB%B6%E5%8F%98%E9%87%8F/" title="Cpp 多线程：条件变量"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-04-15</div><div class="title">Cpp 多线程：条件变量</div></div></a></div><div><a href="/2024/04/14/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/LearnCpp/%E5%A4%9A%E7%BA%BF%E7%A8%8B/Cpp%E5%A4%9A%E7%BA%BF%E7%A8%8B%EF%BC%9A%E7%BA%BF%E7%A8%8B/" title="Cpp 多线程：线程"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-04-14</div><div class="title">Cpp 多线程：线程</div></div></a></div><div><a href="/2024/04/14/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/LearnCpp/%E5%A4%9A%E7%BA%BF%E7%A8%8B/Cpp%E5%A4%9A%E7%BA%BF%E7%A8%8B%EF%BC%9A%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E5%92%8C%E5%8F%AF%E9%87%8D%E5%85%A5/" title="Cpp 多线程：线程安全和可重入"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-04-14</div><div class="title">Cpp 多线程：线程安全和可重入</div></div></a></div><div><a href="/2024/04/15/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/LearnCpp/%E5%A4%9A%E7%BA%BF%E7%A8%8B/Cpp%E5%A4%9A%E7%BA%BF%E7%A8%8B%EF%BC%9A%E5%8E%9F%E5%AD%90%E5%8F%98%E9%87%8F/" title="Cpp 多线程：原子变量"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-04-15</div><div class="title">Cpp 多线程：原子变量</div></div></a></div><div><a href="/2024/04/14/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/LearnCpp/%E5%A4%9A%E7%BA%BF%E7%A8%8B/Cpp%E5%A4%9A%E7%BA%BF%E7%A8%8B%EF%BC%9A%E9%94%81/" title="Cpp 多线程：锁"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-04-14</div><div class="title">Cpp 多线程：锁</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://s2.loli.net/2024/04/28/9U4mZP6gwWiptXj.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Shin</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">45</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">24</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">6</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AE%80%E5%8D%95%E7%9A%84%E7%94%9F%E4%BA%A7%E8%80%85%E6%B6%88%E8%B4%B9%E8%80%85%E6%A8%A1%E5%9E%8B"><span class="toc-number">1.</span> <span class="toc-text">简单的生产者消费者模型</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%94%9F%E4%BA%A7%E8%80%85%E6%B6%88%E8%B4%B9%E8%80%85%E6%A8%A1%E5%9E%8B%E5%87%BA%E7%8E%B0%E7%9A%84%E5%8E%9F%E5%9B%A0"><span class="toc-number">2.</span> <span class="toc-text">生产者消费者模型出现的原因</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%A8%A1%E5%9E%8B%E7%89%B9%E7%82%B9"><span class="toc-number">3.</span> <span class="toc-text">模型特点</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AE%80%E5%8D%95%E5%AE%9E%E7%8E%B0"><span class="toc-number">4.</span> <span class="toc-text">简单实现</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/04/28/%E6%9D%82%E9%A1%B9%E6%95%99%E7%A8%8B/HTML/HTML%E5%9C%A8Markdown%E5%B9%B6%E6%8E%92%E6%98%BE%E7%A4%BA%E5%9B%BE%E7%89%87/" title="HTML 在 Markdown 并排显示图片">HTML 在 Markdown 并排显示图片</a><time datetime="2024-04-28T11:57:26.062Z" title="更新于 2024-04-28 19:57:26">2024-04-28</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/04/26/UE%E5%BC%95%E6%93%8E/%E5%8A%9F%E8%83%BD%E5%AE%9E%E7%8E%B0/%E3%80%90%E5%88%9D%E8%AF%86%E3%80%91%E5%9F%BA%E4%BA%8E%E6%A0%88%E7%9A%84%E7%8A%B6%E6%80%81%E6%9C%BAUI%E7%AE%A1%E7%90%86%E5%99%A8/" title="【初识】基于栈的状态机 UI 管理器">【初识】基于栈的状态机 UI 管理器</a><time datetime="2024-04-28T11:54:33.384Z" title="更新于 2024-04-28 19:54:33">2024-04-28</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/04/27/UE%E5%BC%95%E6%93%8E/%E6%A1%86%E6%9E%B6%E5%AD%A6%E4%B9%A0/UE%E7%9A%84Log%E8%BE%93%E5%87%BA/" title="UE 的 Log 输出">UE 的 Log 输出</a><time datetime="2024-04-28T02:51:20.735Z" title="更新于 2024-04-28 10:51:20">2024-04-28</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/04/25/%E9%98%85%E8%AF%BB%E4%B9%A6%E7%B1%8D/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E3%80%90%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E3%80%91%E7%8A%B6%E6%80%81%E6%A8%A1%E5%BC%8F/" title="【游戏设计模式】状态模式">【游戏设计模式】状态模式</a><time datetime="2024-04-28T02:50:43.152Z" title="更新于 2024-04-28 10:50:43">2024-04-28</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/04/25/%E9%98%85%E8%AF%BB%E4%B9%A6%E7%B1%8D/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E3%80%90%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E3%80%91%E7%8A%B6%E6%80%81%E6%9C%BA/" title="【游戏设计模式】状态机">【游戏设计模式】状态机</a><time datetime="2024-04-28T02:50:41.347Z" title="更新于 2024-04-28 10:50:41">2024-04-28</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2024 By Shin</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><script>function panguFn () {
+  if (typeof pangu === 'object') pangu.autoSpacingPage()
+  else {
+    getScript('https://cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js')
+      .then(() => {
+        pangu.autoSpacingPage()
+      })
+  }
+}
+
+function panguInit () {
+  if (true){
+    GLOBAL_CONFIG_SITE.isPost && panguFn()
+  } else {
+    panguFn()
+  }
+}
+
+document.addEventListener('DOMContentLoaded', panguInit)</script><div class="js-pjax"></div><script src="/js/bg_random.js"></script><script src="/js/avatar_random.js"></script><script src="/js/nav.js"></script><script defer src="https://npm.elemecdn.com/jquery@latest/dist/jquery.min.js"></script><script defer data-pjax src="/js/cat.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><!-- hexo injector body_end start --><div class="js-pjax"><script async="async">var arr = document.getElementsByClassName('recent-post-item');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__zoomIn');
+    arr[i].setAttribute('data-wow-duration', '');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('card-widget');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__zoomIn');
+    arr[i].setAttribute('data-wow-duration', '');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script></div><script defer src="https://npm.elemecdn.com/hexo-butterfly-wowjs/lib/wow.min.js"></script><script defer src="https://npm.elemecdn.com/hexo-butterfly-wowjs/lib/wow_init.js"></script><!-- hexo injector body_end end --></body></html>
