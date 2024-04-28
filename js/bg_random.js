@@ -1,8 +1,8 @@
 //随机背景图片数组，图片可以换成图床链接，注意最后一条后面不要有逗号
 var backimg = [
-  "url(https://s2.loli.net/2024/04/28/hOyTqYmf3Bob26K.jpg)",
-  "url(https://s2.loli.net/2024/04/28/5uaHfDX4FskvrU8.jpg)",
-  "url(https://s2.loli.net/2024/04/28/BdJSUfR6nDhQFtm.jpg)"
+  "url(https://raw.githubusercontent.com/fubuki-no-donuts/pic_bed/main/imgs/bg_01.jpg)",
+  "url(https://raw.githubusercontent.com/fubuki-no-donuts/pic_bed/main/imgs/bg_02.jpg)",
+  "url(https://raw.githubusercontent.com/fubuki-no-donuts/pic_bed/main/imgs/bg_03.jpg)"
 ];
 
 var bgindex = 0;

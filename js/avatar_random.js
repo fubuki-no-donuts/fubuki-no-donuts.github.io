@@ -1,6 +1,6 @@
 var avatarimg = [
-    "https://s2.loli.net/2024/04/28/9U4mZP6gwWiptXj.jpg",
-    "https://s2.loli.net/2024/04/28/HVGIlpTrEwXeUfQ.jpg"
+    "https://raw.githubusercontent.com/fubuki-no-donuts/pic_bed/main/imgs/avatar_03.jpg",
+    "https://raw.githubusercontent.com/fubuki-no-donuts/pic_bed/main/imgs/avatar_01.jpg"
   ];
   
   var avatarindex = 0;

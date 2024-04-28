@@ -34,7 +34,7 @@ if (document.body.clientWidth > 992) {
                 borderRadius: 5 + 'px',
                 right: 60 + 'px',
                 // 这里可以换为你喜欢的图片，例如我就换为了雪人，但是要抠图
-                nekoImg: "https://s2.loli.net/2024/04/28/hkCfXnxcBAYHiJs.png",
+                nekoImg: "https://raw.githubusercontent.com/fubuki-no-donuts/pic_bed/main/imgs/arona_toTop.png",
                 hoverMsg: "喵喵喵~",
                 color: "#6f42c1",
                 during: 500,
@@ -131,7 +131,7 @@ if (document.body.clientWidth > 992) {
         
         $("#myscoll").nekoScroll({
             nekoname:'arona', //nekoname，相当于 id
-            nekoImg:'https://s2.loli.net/2024/04/28/hkCfXnxcBAYHiJs.png', //neko 的背景图片
+            nekoImg:'https://raw.githubusercontent.com/fubuki-no-donuts/pic_bed/main/imgs/arona_toTop.png', //neko 的背景图片
             //scImg:"img/绳 1.png", //绳子的背景图片
             bgcolor:'#1e90ff', //背景颜色，没有绳子背景图片时有效
             zoom:0.9, //绳子长度的缩放值
