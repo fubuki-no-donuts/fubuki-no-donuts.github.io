@@ -21,7 +21,7 @@ var avatarimg = [
           // 切换到下一个图片
           img.src = avatarimg[avatarindex];
         });
-      }, 250); // 与旋转一半的时间保持一致
+      }, 300); // 与旋转一半的时间保持一致
 
       avatarindex++;
       if (avatarindex >= avatarimg.length) {

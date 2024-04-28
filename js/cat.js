@@ -128,23 +128,73 @@ if (document.body.clientWidth > 992) {
         // });
 
         //自定义（去掉以下注释，并注释掉其他的查看效果）
-        
+        function isDarkMode() {
+            var htmlElement = document.querySelector('html');
+            var dataTheme = htmlElement.getAttribute('data-theme');
+            return dataTheme == 'dark';
+        }
+
+
+        var aronaImg = 'https://raw.githubusercontent.com/fubuki-no-donuts/pic_bed/main/imgs/arona_top.png';
+        var aronaColor = '#1e90ff'; //rgba(30,144,255,1);
+        var puranaColor = '#6f42c1'; //rgba(111,66,193,1);
+        var puranaImg = 'https://raw.githubusercontent.com/fubuki-no-donuts/pic_bed/main/imgs/purana_top.png';
+
+        // 监听 data-theme 属性变化
+        var observer = new MutationObserver(function(mutationsList) {
+        for(var mutation of mutationsList) {
+            if (mutation.attributeName === 'data-theme') {
+                // data-theme 属性发生变化时重新检查暗黑模式
+                var isDarkTheme = isDarkMode();
+                var colorSet = isDarkTheme ? puranaColor : aronaColor;
+                var nekoImgUrl = isDarkTheme ? puranaImg : aronaImg;
+                $("#myscoll").nekoScroll({
+                    nekoname:'arona',
+                    nekoImg: nekoImgUrl,
+                    bgcolor: colorSet,
+                    zoom:0.9,
+                    hoverMsg:'喵~',
+                    right:'100px',
+                    fontFamily:'楷体',
+                    fontSize:'14px',
+                    fontColor: colorSet,
+                    scroWidth:'8px',
+                    z_index:100,
+                    during:1200,
+                });
+                $(".neko").hover(function() {
+                    $(this).css("color", colorSet);
+                });
+        }
+        }
+        });
+
+        // 监听 html 元素的变化
+        observer.observe(document.querySelector('html'), { attributes: true });
+
+        var isDarkTheme = isDarkMode();
+        var nekoImgUrl = isDarkTheme ? puranaImg : aronaImg;
+        var colorSet = isDarkTheme ? puranaColor : aronaColor;
         $("#myscoll").nekoScroll({
             nekoname:'arona', //nekoname，相当于 id
-            nekoImg:'https://raw.githubusercontent.com/fubuki-no-donuts/pic_bed/main/imgs/arona_toTop.png', //neko 的背景图片
+            nekoImg: nekoImgUrl,
+            // nekoImg:'https://raw.githubusercontent.com/fubuki-no-donuts/pic_bed/main/imgs/arona_toTop.png', //neko 的背景图片
             //scImg:"img/绳 1.png", //绳子的背景图片
-            bgcolor:'#1e90ff', //背景颜色，没有绳子背景图片时有效
+            bgcolor:colorSet, //背景颜色，没有绳子背景图片时有效
             zoom:0.9, //绳子长度的缩放值
-            hoverMsg:'Sensei~喵', //鼠标浮动到 neko 上方的对话框信息
+            hoverMsg:'喵~', //鼠标浮动到 neko 上方的对话框信息
             right:'100px', //距离页面右边的距离
             fontFamily:'楷体', //对话框字体
             fontSize:'14px', //对话框字体的大小
-            color:'#1e90ff', //对话框字体颜色
+            fontColor: colorSet, //对话框字体颜色
             scroWidth:'8px', //绳子的宽度
             z_index:100, //不用解释了吧
             during:1200, //从顶部到底部滑动的时长
         });
         $("#myscoll img").css("transform", "scale(0.5)");
+        $(".neko").hover(function() {
+            $(this).css("color", colorSet);
+        });
         
     })
 }
