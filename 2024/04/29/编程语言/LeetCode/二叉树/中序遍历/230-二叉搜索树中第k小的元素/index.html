@@ -1,0 +1,240 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>230.二叉搜索树中第 k 小的元素 | Fubuki の Donuts</title><meta name="author" content="Shin"><meta name="copyright" content="Shin"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="题目链接[-&gt;](https:&#x2F;&#x2F;leetcode.cn&#x2F;problems&#x2F;kth-smallest-element-in-a-bst&#x2F;)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="230.二叉搜索树中第 k 小的元素">
+<meta property="og:url" content="https://fubuki-no-donuts.github.io/2024/04/29/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/LeetCode/%E4%BA%8C%E5%8F%89%E6%A0%91/%E4%B8%AD%E5%BA%8F%E9%81%8D%E5%8E%86/230-%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91%E4%B8%AD%E7%AC%ACk%E5%B0%8F%E7%9A%84%E5%85%83%E7%B4%A0/index.html">
+<meta property="og:site_name" content="Fubuki の Donuts">
+<meta property="og:description" content="题目链接[-&gt;](https:&#x2F;&#x2F;leetcode.cn&#x2F;problems&#x2F;kth-smallest-element-in-a-bst&#x2F;)">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://raw.githubusercontent.com/fubuki-no-donuts/pic_bed/main/imgs/family_03.jpg">
+<meta property="article:published_time" content="2024-04-29T11:59:24.000Z">
+<meta property="article:modified_time" content="2024-04-29T12:14:05.220Z">
+<meta property="article:author" content="Shin">
+<meta property="article:tag" content="数据结构与算法">
+<meta property="article:tag" content="二叉树">
+<meta property="article:tag" content="二叉树的遍历">
+<meta property="article:tag" content="二叉树的中序遍历">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/fubuki-no-donuts/pic_bed/main/imgs/family_03.jpg"><link rel="shortcut icon" href="https://raw.githubusercontent.com/fubuki-no-donuts/pic_bed/main/imgs/avatar_01.jpg"><link rel="canonical" href="https://fubuki-no-donuts.github.io/2024/04/29/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/LeetCode/%E4%BA%8C%E5%8F%89%E6%A0%91/%E4%B8%AD%E5%BA%8F%E9%81%8D%E5%8E%86/230-%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91%E4%B8%AD%E7%AC%ACk%E5%B0%8F%E7%9A%84%E5%85%83%E7%B4%A0/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '230.二叉搜索树中第 k 小的元素',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-04-29 20:14:05'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/bg_onepic.css" media="defer" onload="this.media='all'"><link rel="stylesheet" href="/css/anim_avatar_change.css" media="defer" onload="this.media='all'"><link rel="stylesheet" href="/css/nav.css" media="defer" onload="this.media='all'"><link rel="stylesheet" href="/css/cat.css"><link rel="stylesheet" href="/css/arona_style.css"><link rel="stylesheet" href="/css/purana_style.css"><div id="myscoll"></div><!-- hexo injector head_end start --><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-wowjs/lib/animate.min.css" media="print" onload="this.media='screen'"><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.2.0"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><script>(()=>{
+  const $loadingBox = document.getElementById('loading-box')
+  const $body = document.body
+  const preloader = {
+    endLoading: () => {
+      $body.style.overflow = ''
+      $loadingBox.classList.add('loaded')
+    },
+    initLoading: () => {
+      $body.style.overflow = 'hidden'
+      $loadingBox.classList.remove('loaded')
+    }
+  }
+
+  preloader.initLoading()
+  window.addEventListener('load',() => { preloader.endLoading() })
+
+  if (false) {
+    document.addEventListener('pjax:send', () => { preloader.initLoading() })
+    document.addEventListener('pjax:complete', () => { preloader.endLoading() })
+  }
+})()</script><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://raw.githubusercontent.com/fubuki-no-donuts/pic_bed/main/imgs/avatar_03.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">56</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">33</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">6</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 文档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 列表</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 视频</span></a></li><li><a class="site-page child" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://raw.githubusercontent.com/fubuki-no-donuts/pic_bed/main/imgs/family_03.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="Fubuki の Donuts"><span class="site-name">Fubuki の Donuts</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 文档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 列表</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 视频</span></a></li><li><a class="site-page child" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">230.二叉搜索树中第 k 小的元素</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-04-29T11:59:24.000Z" title="发表于 2024-04-29 19:59:24">2024-04-29</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-04-29T12:14:05.220Z" title="更新于 2024-04-29 20:14:05">2024-04-29</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/">编程语言</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="230.二叉搜索树中第 k 小的元素"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>本体要求找到二叉搜索树中，第 k 小的元素。二叉搜索树的前序遍历序列正好是升序序列，所以可以利用前序遍历来找到。</p>
+<hr>
+<h1 id="方法一：迭代法"><a href="#方法一：迭代法" class="headerlink" title="方法一：迭代法"></a>方法一：迭代法</h1><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">kthSmallest</span><span class="params">(TreeNode* root, <span class="type">int</span> k)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    vector&lt;<span class="type">int</span>&gt; ret;</span><br><span class="line">    stack&lt;TreeNode*&gt; stk;</span><br><span class="line">    TreeNode* cur = root;</span><br><span class="line">    <span class="keyword">while</span>(cur || !stk.<span class="built_in">empty</span>())</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">while</span>(cur != <span class="literal">nullptr</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            stk.<span class="built_in">push</span>(cur);</span><br><span class="line">            cur = cur-&gt;left;</span><br><span class="line">        &#125;</span><br><span class="line">        cur = stk.<span class="built_in">top</span>(); stk.<span class="built_in">pop</span>();</span><br><span class="line">        ret.<span class="built_in">push_back</span>(cur-&gt;val);</span><br><span class="line">        cur = cur-&gt;right;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ret[k<span class="number">-1</span>];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这个方法通过先获取二叉树的中序遍历序列，再从其中获取第 k 小的元素</p>
+<p>时间复杂度：遍历二叉树$O(n)$</p>
+<p>空间复杂度一个保存二叉树元素的 vector，一个保存具有左节点的节点的 stack，$O(n)$</p>
+<hr>
+<h1 id="方法二：迭代法优化"><a href="#方法二：迭代法优化" class="headerlink" title="方法二：迭代法优化"></a>方法二：迭代法优化</h1><p>由于中序遍历过程中，会从最左侧最小的元素开始往容器中保存，那么一定会在访问第 k 个节点的时候就得到需要返回的值了，后续节点不需要再遍历</p>
+<p>这里可以利用传入的 k，做一个标志位</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">kthSmallest</span><span class="params">(TreeNode* root, <span class="type">int</span> k)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    vector&lt;<span class="type">int</span>&gt; ret;</span><br><span class="line">    stack&lt;TreeNode*&gt; stk;</span><br><span class="line">    TreeNode* cur = root;</span><br><span class="line">    <span class="keyword">while</span>(cur || !stk.<span class="built_in">empty</span>())</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">while</span>(cur != <span class="literal">nullptr</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            stk.<span class="built_in">push</span>(cur);</span><br><span class="line">            cur = cur-&gt;left;</span><br><span class="line">        &#125;</span><br><span class="line">        cur = stk.<span class="built_in">top</span>(); stk.<span class="built_in">pop</span>();</span><br><span class="line">        <span class="keyword">if</span>(--k == <span class="number">0</span>) <span class="keyword">return</span> cur-&gt;val; <span class="comment">// 加上这一句就够了，因为题中表示 k 一定在 1~n 之间，所以一定会在这里截住</span></span><br><span class="line">        ret.<span class="built_in">push_back</span>(cur-&gt;val);</span><br><span class="line">        cur = cur-&gt;right;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ret[k<span class="number">-1</span>];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>此时时间复杂度变为：$O(k)$，空间复杂度变为：$O(k)$</p>
+<hr>
+<h1 id="思考：如果你需要频繁地查找第-k-小的值，你将如何优化算法？"><a href="#思考：如果你需要频繁地查找第-k-小的值，你将如何优化算法？" class="headerlink" title="思考：如果你需要频繁地查找第 k 小的值，你将如何优化算法？"></a>思考：如果你需要频繁地查找第 k 小的值，你将如何优化算法？</h1><p>原二叉树结点设计中没有保存一个子树的节点数量，从而导致必须要遍历子树来的值当前节点的位置</p>
+<p>如果要优化，可以在节点中保存一个节点数量。或者重新设计一个类，里边封装二叉树的根节点和每个节点的子树中节点个数的 Map 容器</p>
+<p>这样，在查找第 k 小的元素时，只需要判断左右子树包含的节点个数</p>
+<ul>
+<li>如果<strong>左子树节点个数小于 k-1</strong>，说明目标一定在<strong>右节点</strong></li>
+<li>如果左子树节点个数<strong>等于 k-1</strong>，说明目标一定是<strong>该节点</strong></li>
+<li>如果左子树节点个数<strong>大于 k-1</strong>，说明目标一定在<strong>左节点</strong></li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MyBst</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">MyBst</span>(TreeNode *root) &#123;</span><br><span class="line">        <span class="keyword">this</span>-&gt;root = root;</span><br><span class="line">        <span class="built_in">countNodeNum</span>(root);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 返回二叉搜索树中第 k 小的元素</span></span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">kthSmallest</span><span class="params">(<span class="type">int</span> k)</span> </span>&#123;</span><br><span class="line">        TreeNode *node = root;</span><br><span class="line">        <span class="keyword">while</span> (node != <span class="literal">nullptr</span>) &#123;</span><br><span class="line">            <span class="type">int</span> left = <span class="built_in">getNodeNum</span>(node-&gt;left);</span><br><span class="line">            <span class="keyword">if</span> (left &lt; k - <span class="number">1</span>) &#123;</span><br><span class="line">                node = node-&gt;right;</span><br><span class="line">                k -= left + <span class="number">1</span>;</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (left == k - <span class="number">1</span>) &#123;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                node = node-&gt;left;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> node-&gt;val;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    TreeNode *root;</span><br><span class="line">    unordered_map&lt;TreeNode *, <span class="type">int</span>&gt; nodeNum;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 统计以 node 为根结点的子树的结点数</span></span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">countNodeNum</span><span class="params">(TreeNode * node)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (node == <span class="literal">nullptr</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        nodeNum[node] = <span class="number">1</span> + <span class="built_in">countNodeNum</span>(node-&gt;left) + <span class="built_in">countNodeNum</span>(node-&gt;right);</span><br><span class="line">        <span class="keyword">return</span> nodeNum[node];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 获取以 node 为根结点的子树的结点数</span></span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">getNodeNum</span><span class="params">(TreeNode * node)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (node != <span class="literal">nullptr</span> &amp;&amp; nodeNum.<span class="built_in">count</span>(node)) &#123;</span><br><span class="line">            <span class="keyword">return</span> nodeNum[node];</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+
+
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://fubuki-no-donuts.github.io">Shin</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://fubuki-no-donuts.github.io/2024/04/29/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/LeetCode/%E4%BA%8C%E5%8F%89%E6%A0%91/%E4%B8%AD%E5%BA%8F%E9%81%8D%E5%8E%86/230-%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91%E4%B8%AD%E7%AC%ACk%E5%B0%8F%E7%9A%84%E5%85%83%E7%B4%A0/">https://fubuki-no-donuts.github.io/2024/04/29/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/LeetCode/%E4%BA%8C%E5%8F%89%E6%A0%91/%E4%B8%AD%E5%BA%8F%E9%81%8D%E5%8E%86/230-%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91%E4%B8%AD%E7%AC%ACk%E5%B0%8F%E7%9A%84%E5%85%83%E7%B4%A0/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://fubuki-no-donuts.github.io" target="_blank">Fubuki の Donuts</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/">数据结构与算法</a><a class="post-meta__tags" href="/tags/%E4%BA%8C%E5%8F%89%E6%A0%91/">二叉树</a><a class="post-meta__tags" href="/tags/%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E9%81%8D%E5%8E%86/">二叉树的遍历</a><a class="post-meta__tags" href="/tags/%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E4%B8%AD%E5%BA%8F%E9%81%8D%E5%8E%86/">二叉树的中序遍历</a></div><div class="post_share"><div class="social-share" data-image="https://raw.githubusercontent.com/fubuki-no-donuts/pic_bed/main/imgs/family_03.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2024/04/29/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/LeetCode/%E4%BA%8C%E5%8F%89%E6%A0%91/%E4%B8%AD%E5%BA%8F%E9%81%8D%E5%8E%86/94-%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E4%B8%AD%E5%BA%8F%E9%81%8D%E5%8E%86/" title="94.二叉树的中序遍历"><img class="cover" src="https://raw.githubusercontent.com/fubuki-no-donuts/pic_bed/main/imgs/family_03.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">94.二叉树的中序遍历</div></div></a></div><div class="next-post pull-right"><a href="/2024/04/29/%E8%BD%AF%E4%BB%B6%E5%AD%A6%E4%B9%A0/UE/%E6%A1%86%E6%9E%B6%E5%AD%A6%E4%B9%A0/UE%E7%9A%84%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/" title="UE 的内存管理"><img class="cover" src="https://raw.githubusercontent.com/fubuki-no-donuts/pic_bed/main/imgs/family_05.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">UE 的内存管理</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2024/04/29/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/LeetCode/%E4%BA%8C%E5%8F%89%E6%A0%91/%E4%B8%AD%E5%BA%8F%E9%81%8D%E5%8E%86/94-%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E4%B8%AD%E5%BA%8F%E9%81%8D%E5%8E%86/" title="94.二叉树的中序遍历"><img class="cover" src="https://raw.githubusercontent.com/fubuki-no-donuts/pic_bed/main/imgs/family_03.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-04-29</div><div class="title">94.二叉树的中序遍历</div></div></a></div><div><a href="/2024/04/29/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/LeetCode/%E4%BA%8C%E5%8F%89%E6%A0%91/%E5%89%8D%E5%BA%8F%E9%81%8D%E5%8E%86/114-%E4%BA%8C%E5%8F%89%E6%A0%91%E5%B1%95%E5%BC%80%E4%B8%BA%E9%93%BE%E8%A1%A8/" title="114-二叉树展开为链表"><img class="cover" src="https://raw.githubusercontent.com/fubuki-no-donuts/pic_bed/main/imgs/family_03.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-04-29</div><div class="title">114-二叉树展开为链表</div></div></a></div><div><a href="/2024/03/31/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/LeetCode/%E5%8D%95%E8%B0%83%E6%A0%88/739-%E6%AF%8F%E6%97%A5%E6%B8%A9%E5%BA%A6/" title="739.每日温度"><img class="cover" src="https://raw.githubusercontent.com/fubuki-no-donuts/pic_bed/main/imgs/family_03.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-03-31</div><div class="title">739.每日温度</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://raw.githubusercontent.com/fubuki-no-donuts/pic_bed/main/imgs/avatar_03.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Shin</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">56</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">33</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">6</div></a></div><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/fubuki-no-donuts" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="/soutakushin@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #24292e;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">人生苦短，及时行乐</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%96%B9%E6%B3%95%E4%B8%80%EF%BC%9A%E8%BF%AD%E4%BB%A3%E6%B3%95"><span class="toc-number">1.</span> <span class="toc-text">方法一：迭代法</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%96%B9%E6%B3%95%E4%BA%8C%EF%BC%9A%E8%BF%AD%E4%BB%A3%E6%B3%95%E4%BC%98%E5%8C%96"><span class="toc-number">2.</span> <span class="toc-text">方法二：迭代法优化</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%80%9D%E8%80%83%EF%BC%9A%E5%A6%82%E6%9E%9C%E4%BD%A0%E9%9C%80%E8%A6%81%E9%A2%91%E7%B9%81%E5%9C%B0%E6%9F%A5%E6%89%BE%E7%AC%AC-k-%E5%B0%8F%E7%9A%84%E5%80%BC%EF%BC%8C%E4%BD%A0%E5%B0%86%E5%A6%82%E4%BD%95%E4%BC%98%E5%8C%96%E7%AE%97%E6%B3%95%EF%BC%9F"><span class="toc-number">3.</span> <span class="toc-text">思考：如果你需要频繁地查找第 k 小的值，你将如何优化算法？</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2024/04/26/%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/README/" title="学习记录"><img src="https://raw.githubusercontent.com/fubuki-no-donuts/pic_bed/main/imgs/family_02.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="学习记录"/></a><div class="content"><a class="title" href="/2024/04/26/%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/README/" title="学习记录">学习记录</a><time datetime="2024-04-29T16:42:24.408Z" title="更新于 2024-04-30 00:42:24">2024-04-30</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/04/30/%E8%BD%AF%E4%BB%B6%E5%AD%A6%E4%B9%A0/UE/%E6%A1%86%E6%9E%B6%E5%AD%A6%E4%B9%A0/UE%E6%9D%90%E8%B4%A8/UE%E6%9D%90%E8%B4%A8-SphereMask/" title="UE 材质-SphereMask"><img src="https://raw.githubusercontent.com/fubuki-no-donuts/pic_bed/main/imgs/family_05.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="UE 材质-SphereMask"/></a><div class="content"><a class="title" href="/2024/04/30/%E8%BD%AF%E4%BB%B6%E5%AD%A6%E4%B9%A0/UE/%E6%A1%86%E6%9E%B6%E5%AD%A6%E4%B9%A0/UE%E6%9D%90%E8%B4%A8/UE%E6%9D%90%E8%B4%A8-SphereMask/" title="UE 材质-SphereMask">UE 材质-SphereMask</a><time datetime="2024-04-29T16:07:10.017Z" title="更新于 2024-04-30 00:07:10">2024-04-30</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/04/29/%E8%BD%AF%E4%BB%B6%E5%AD%A6%E4%B9%A0/UE/%E6%A1%86%E6%9E%B6%E5%AD%A6%E4%B9%A0/UE%E6%9D%90%E8%B4%A8/UE%E6%9D%90%E8%B4%A8-TexCoord%E8%8A%82%E7%82%B9/" title="UE 材质：TexCoord 节点"><img src="https://raw.githubusercontent.com/fubuki-no-donuts/pic_bed/main/imgs/family_05.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="UE 材质：TexCoord 节点"/></a><div class="content"><a class="title" href="/2024/04/29/%E8%BD%AF%E4%BB%B6%E5%AD%A6%E4%B9%A0/UE/%E6%A1%86%E6%9E%B6%E5%AD%A6%E4%B9%A0/UE%E6%9D%90%E8%B4%A8/UE%E6%9D%90%E8%B4%A8-TexCoord%E8%8A%82%E7%82%B9/" title="UE 材质：TexCoord 节点">UE 材质：TexCoord 节点</a><time datetime="2024-04-29T16:02:11.085Z" title="更新于 2024-04-30 00:02:11">2024-04-30</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/04/26/%E8%BD%AF%E4%BB%B6%E5%AD%A6%E4%B9%A0/UE/%E5%8A%9F%E8%83%BD%E5%AE%9E%E7%8E%B0/%E3%80%90%E8%93%9D%E5%9B%BE%E3%80%91%E7%94%BB%E7%AC%94/" title="【蓝图】画笔"><img src="https://raw.githubusercontent.com/fubuki-no-donuts/pic_bed/main/imgs/family_05.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="【蓝图】画笔"/></a><div class="content"><a class="title" href="/2024/04/26/%E8%BD%AF%E4%BB%B6%E5%AD%A6%E4%B9%A0/UE/%E5%8A%9F%E8%83%BD%E5%AE%9E%E7%8E%B0/%E3%80%90%E8%93%9D%E5%9B%BE%E3%80%91%E7%94%BB%E7%AC%94/" title="【蓝图】画笔">【蓝图】画笔</a><time datetime="2024-04-29T15:57:54.421Z" title="更新于 2024-04-29 23:57:54">2024-04-29</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/04/28/%E6%9D%82%E9%A1%B9%E6%95%99%E7%A8%8B/Hexo/Hexo%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E7%95%8C%E9%9D%A2%E7%BE%8E%E5%8C%96/" title="Hexo 个人博客界面美化"><img src="https://raw.githubusercontent.com/fubuki-no-donuts/pic_bed/main/imgs/family_06.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Hexo 个人博客界面美化"/></a><div class="content"><a class="title" href="/2024/04/28/%E6%9D%82%E9%A1%B9%E6%95%99%E7%A8%8B/Hexo/Hexo%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E7%95%8C%E9%9D%A2%E7%BE%8E%E5%8C%96/" title="Hexo 个人博客界面美化">Hexo 个人博客界面美化</a><time datetime="2024-04-29T15:36:49.875Z" title="更新于 2024-04-29 23:36:49">2024-04-29</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2024 By Shin</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><script>function panguFn () {
+  if (typeof pangu === 'object') pangu.autoSpacingPage()
+  else {
+    getScript('https://cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js')
+      .then(() => {
+        pangu.autoSpacingPage()
+      })
+  }
+}
+
+function panguInit () {
+  if (true){
+    GLOBAL_CONFIG_SITE.isPost && panguFn()
+  } else {
+    panguFn()
+  }
+}
+
+document.addEventListener('DOMContentLoaded', panguInit)</script><div class="js-pjax"></div><script src="/js/avatar_random.js"></script><script defer src="https://npm.elemecdn.com/jquery@latest/dist/jquery.min.js"></script><script defer data-pjax src="/js/cat.js"></script><canvas class="fireworks" mobile="false"></canvas><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/fireworks.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><!-- hexo injector body_end start --><div class="js-pjax"><script async="async">var arr = document.getElementsByClassName('recent-post-item');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__zoomIn');
+    arr[i].setAttribute('data-wow-duration', '');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('card-widget');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__zoomIn');
+    arr[i].setAttribute('data-wow-duration', '');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script></div><script defer src="https://npm.elemecdn.com/hexo-butterfly-wowjs/lib/wow.min.js"></script><script defer src="https://npm.elemecdn.com/hexo-butterfly-wowjs/lib/wow_init.js"></script><!-- hexo injector body_end end --></body></html>

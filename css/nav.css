@@ -61,7 +61,6 @@
   top: 0px; /* 向上移动 10px，根据需要调整 */
 }
 
-
 #page-header #post-info {
   position: absolute;
   bottom: 100px;
@@ -74,5 +73,14 @@ div#post-info h1.post-title,
 div#post-meta {
   /* font-size: 36; */
   font-weight: bold;
+}
+
+/* 子菜单横向展示 */
+#nav .menus_items .menus_item:hover .menus_item_child {
+  display: flex !important;
+}
+/* 这里的 2 是代表导航栏的第 2 个元素，即有子菜单的元素，可以按自己需求修改 */
+.menus_items .menus_item:nth-child(2) .menus_item_child {
+  left: 0px;
 }
 

@@ -137,8 +137,8 @@ if (document.body.clientWidth > 992) {
 
         var aronaImg = 'https://raw.githubusercontent.com/fubuki-no-donuts/pic_bed/main/imgs/arona_top.png';
         var aronaColor = '#1e90ff'; //rgba(30,144,255,1);
-        var puranaColor = '#6f42c1'; //rgba(111,66,193,1);
         var puranaImg = 'https://raw.githubusercontent.com/fubuki-no-donuts/pic_bed/main/imgs/purana_top.png';
+        var puranaColor = '#6f42c1'; //rgba(111,66,193,1);
 
         // 监听 data-theme 属性变化
         var observer = new MutationObserver(function(mutationsList) {
